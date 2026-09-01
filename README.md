@@ -1,0 +1,2 @@
+# moneyspider-artefacts
+moneyspider-artefacts
