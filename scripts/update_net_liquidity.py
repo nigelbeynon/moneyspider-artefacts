@@ -58,6 +58,8 @@ def fetch_fed():
                 vals = [num(c) for c in r[1:] if num(c) is not None]
                 if vals: return vals[0]
         return None
+    cand = [(i, r[:6]) for i, r in enumerate(rows) if r and (r[0].lower().startswith("total assets") or r[0].startswith("U.S. Treasury, General") or "Consolidated Statement" in " ".join(r))]
+    print("::notice title=H41 candidates::" + json.dumps(cand)[:3500].replace("%", "%25").replace("\n", "%0A"))
     walcl = pick("Total assets")
     tga = pick("U.S. Treasury, General Account")
     if walcl is None or tga is None: die(f"H.4.1: could not parse WALCL={walcl} TGA={tga} (see debug/h41.html)")
