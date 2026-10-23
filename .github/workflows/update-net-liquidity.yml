@@ -1,0 +1,42 @@
+name: Update Net Liquidity
+on:
+  schedule:
+    - cron: "45 21 * * 4"   # Thu, after H.4.1 (4:30pm ET)
+    - cron: "30 8 * * 5"    # Fri, retry
+    - cron: "30 8 * * 1"    # Mon, retry
+  workflow_dispatch:
+  push:
+    branches: [pipeline/net-liquidity]
+    paths: ["scripts/update_net_liquidity.py", ".github/workflows/update-net-liquidity.yml"]
+permissions:
+  contents: write
+  issues: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Fetch and update
+        run: python scripts/update_net_liquidity.py
+      - name: Upload debug and data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: net-liquidity-debug
+          path: |
+            data/net-liquidity.json
+            debug/
+          if-no-files-found: ignore
+      - name: Commit data (main only)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "moneyspider-data-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/net-liquidity.json
+          git diff --cached --quiet || (git commit -m "Net Liquidity data refresh" && git push)
+      - name: Open issue on failure
+        if: failure() && github.ref == 'refs/heads/main'
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: gh issue create --title "Net Liquidity refresh failed $(date -u +%F)" --body "See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
