@@ -23,6 +23,7 @@ def dump(name, text):
     DEBUG.mkdir(exist_ok=True); (DEBUG / name).write_text(text)
 
 def die(msg):
+    print("::error title=Net Liquidity refresh::" + str(msg).replace("%", "%25").replace("\r", "").replace("\n", "%0A")[:4000])
     print("ERROR:", msg, file=sys.stderr); sys.exit(1)
 
 def num(s):
@@ -100,4 +101,9 @@ def main():
     print(json.dumps(d["latest"]))
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except SystemExit:
+        raise
+    except Exception as e:  # network/parse errors -> loud, readable failure
+        die(f"{type(e).__name__}: {e}")
