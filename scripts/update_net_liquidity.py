@@ -72,7 +72,7 @@ def fetch_rrp(wed):
         if str(o.get("operationType", "")).lower().startswith("reverse") and str(o.get("term", "")).lower().startswith("overnight"):
             d = o.get("operationDate"); amt = o.get("totalAmtAccepted")
             if d is not None and amt is not None: by[d] = by.get(d, 0.0) + float(amt) / 1e9
-    if not by: die("NY Fed: no overnight reverse-repo operations returned (see debug/nyfed_rrp.json)")
+    if not by: die("NY Fed: no overnight reverse-repo operations parsed. Raw start: " + raw[:1800])
     latest = max(by)
     return by.get(wed.isoformat()), by[latest], latest
 
