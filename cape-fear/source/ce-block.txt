@@ -1,0 +1,425 @@
+<!-- Cape Fear · Trajectory Enquiries: US Earnings (ce-) · MoneySpider /macro · deployed 3 Nov 2026 in Cape Fear's own section (OPEN-ITEMS B33)
+     Replaces Cape Fear (cf-, GitHub Pages iframe) and Mathematical Scenarios (ms-) when deployed. Inline block, no iframe.
+     Eight fold-down lines: the ruler -> today -> compared with when -> why it might mislead -> does it predict anything -> what could that mean -> do the two rulers agree -> what would change this answer.
+     DATA: Robert Shiller, ie_data.xls (shillerdata.com), read directly 3 Nov 2026. CAPE monthly Jan 1881 to Oct 2026 baked into CE_ENC (values x100, comma-separated, from Jan 1881).
+       Source rule: Shiller's own file only, never multpl.com or MacroMicro (CLAUDE.md, 3 Nov 2026).
+       Constants to refresh monthly with the series: AS_OF, FILE_READ, CAPE_NOW, REAL_PRICE_NOW, MEANS, DIV_YIELD.
+       Line 5 table: computed from Shiller's real total return series, start months Jan 1881 to Oct 2016 (RESEARCH/2026.11.03 Cape Fear - does CAPE predict anything (our table).md). Refresh yearly.
+       Line 7: Buffett Indicator 255.1% (Q2 2026) quoted from TE: US Markets; refresh when that edition refreshes.
+       Line 4: 10-year par yield 4.91% (Treasury, 2 Nov 2026), quoted, refresh by hand.
+     Overdue stamp: amber if today is more than 45 days after FILE_READ.
+     Falsifier (Nigel, 3 Nov 2026): ruler shifted if CAPE holds above ~36 through a US recession; reverting if below the post-1990 mean for two quarters.
+     Macro At A Glance can read #ce-b-cape and #ce-b-pct.
+     Breakout: width min(1100px,92vw), NO percentage max-width. Height fix + centring as on te-/tq-/tw-.
+     #ce-all opens every line (Observatory screenshots). SVG colours hardcoded. No personal name anywhere. Risk warning omitted (global footer). -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+#ce-root{color-scheme:dark;--bg:#1A1A1A;--panel:#222322;--line:#343634;--ink:#EDEEEC;--soft:#B9BCB8;--mute:#9A9A9A;--green:#1CA226;--green-soft:rgba(28,162,38,.14);--warn:#D9A441;--warn-soft:rgba(217,164,65,.14);--sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}
+#ce-root,#ce-root *{box-sizing:border-box}
+#ce-root{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;width:min(1100px,92vw);margin:0;text-align:left}
+#ce-root .wrap{max-width:none;margin:0 auto;padding-inline:clamp(16px,3vw,32px);padding-block:40px 64px}
+#ce-root .num{font-variant-numeric:tabular-nums}
+#ce-root h1,#ce-root h2,#ce-root h3{text-wrap:balance;margin:0;color:var(--ink);font-family:var(--sans);text-transform:none}
+#ce-root p{margin:0;line-height:1.6}
+#ce-root .mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+#ce-root a{color:var(--green)}
+#ce-root .mast{display:grid;gap:18px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+#ce-root .brand{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center}
+#ce-root .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:2px;background:var(--warn-soft);color:var(--warn)}
+#ce-root .mast h1{font-size:clamp(40px,7vw,76px);font-weight:800;letter-spacing:-.03em;line-height:1}
+#ce-root .mast h1 span{color:var(--green)}
+#ce-root .lede{max-width:64ch;color:var(--soft);font-size:18px}
+#ce-root .chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+#ce-root .chain a{color:var(--soft);text-decoration:none;border:1px solid var(--line);padding:4px 9px;border-radius:3px}
+#ce-root .chain a:hover,#ce-root .chain a:focus-visible{border-color:var(--green);color:var(--ink);outline:none}
+#ce-root .board{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:28px}
+#ce-root .board div{background:var(--bg);padding:16px 14px;display:grid;gap:4px;align-content:start}
+#ce-root .board .v{font-size:26px;font-weight:700;letter-spacing:-.02em}
+#ce-root .board .v.g{color:var(--green)}
+#ce-root .board .k{font-size:13px;color:var(--soft);line-height:1.35}
+#ce-root .board .d{font-family:var(--mono);font-size:11px;color:var(--mute)}
+@media (max-width:820px){#ce-root .board{grid-template-columns:repeat(2,1fr)}#ce-root .board div:last-child{grid-column:1/-1}}
+#ce-root details.call{display:block;border-bottom:1px solid var(--line)}
+#ce-root details.call>summary{list-style:none;cursor:pointer;padding-block:24px;display:block}
+#ce-root details.call>summary::-webkit-details-marker{display:none}
+#ce-root details.call>summary::marker{content:""}
+#ce-root details.call>summary:focus-visible{outline:1px solid var(--green);outline-offset:4px}
+#ce-root details.call>summary:hover h2{color:#fff}
+#ce-root details.call>*:not(summary)+*{margin-top:22px}
+#ce-root details.call[open]{padding-bottom:28px}
+#ce-root details.call[open]>summary{padding-bottom:22px}
+#ce-root .callhead{display:grid;grid-template-columns:auto 1fr auto;gap:6px 18px;align-items:baseline}
+#ce-root .line{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--green);text-transform:uppercase;grid-row:1/3;padding-top:6px}
+#ce-root .callhead h2{font-size:clamp(24px,3.4vw,34px);font-weight:700;letter-spacing:-.02em}
+#ce-root .stage{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.08em;text-transform:uppercase}
+#ce-root .ans{grid-column:3;grid-row:1/3;align-self:center;display:flex;align-items:center;gap:14px;justify-self:end;text-align:right}
+#ce-root .ansv{font-size:clamp(15px,1.8vw,20px);font-weight:700;color:var(--green);letter-spacing:-.01em;white-space:nowrap}
+#ce-root details.call[open] .ansv{visibility:hidden}
+#ce-root .chev{width:10px;height:10px;border-right:2px solid var(--mute);border-bottom:2px solid var(--mute);transform:rotate(45deg) translateY(-3px);transition:transform .2s}
+#ce-root details.call[open] .chev{transform:rotate(-135deg) translate(-2px,-2px)}
+#ce-root details.call>summary:hover .chev{border-color:var(--green)}
+#ce-root .reply{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:28px;align-items:start}
+#ce-root .reply.one{grid-template-columns:1fr}
+@media (max-width:820px){#ce-root .reply{grid-template-columns:1fr}#ce-root .callhead{grid-template-columns:1fr}#ce-root .line{grid-row:auto;padding:0}#ce-root .ans{grid-column:1;grid-row:auto;justify-self:stretch;justify-content:space-between;text-align:left;margin-top:6px}#ce-root .ansv{white-space:normal;font-size:16px}}
+#ce-root .answer{display:grid;gap:10px;min-width:0}
+#ce-root .say{font-family:var(--mono);font-size:12px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+#ce-root .big{font-size:clamp(48px,8vw,84px);font-weight:800;letter-spacing:-.04em;line-height:.95}
+#ce-root .big.g{color:var(--green)}
+#ce-root .big small{font-size:.38em;font-weight:500;color:var(--soft);letter-spacing:-.01em}
+#ce-root .answer p{color:var(--soft);max-width:60ch}
+#ce-root .facts{display:grid;border-top:1px solid var(--line);margin:0}
+#ce-root .facts div{display:grid;grid-template-columns:1fr auto;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+#ce-root .facts .l{color:var(--soft)}
+#ce-root .facts b{font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+#ce-root .tag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:2px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+#ce-root .tag.c{background:var(--green-soft);color:var(--green)}
+#ce-root .tag.i{background:var(--warn-soft);color:var(--warn)}
+#ce-root .fig{background:var(--panel);border:1px solid var(--line);padding:18px;display:grid;gap:10px;min-width:0}
+#ce-root .fig h3{font-size:14px;font-weight:600}
+#ce-root .fighead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+#ce-root .tog{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+#ce-root .tog button{background:transparent;color:var(--soft);border:0;font:500 12px var(--sans);padding:5px 12px;cursor:pointer}
+#ce-root .tog button[aria-pressed="true"]{background:var(--green);color:#fff}
+#ce-root .tog button:focus-visible{outline:1px solid var(--green);outline-offset:-1px}
+#ce-root .note{font-size:13px;color:var(--mute)}
+#ce-root svg{width:100%;height:auto;display:block}
+#ce-root svg text{font-family:var(--sans)}
+#ce-root .receipts{font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.04em}
+#ce-root .changes{font-size:14px;color:var(--soft);border-left:2px solid var(--line);padding-left:14px;max-width:80ch}
+#ce-root .changes strong{color:var(--ink);font-weight:600}
+#ce-root .sum{display:grid;grid-template-columns:auto auto auto;gap:4px 14px;align-items:baseline;justify-content:start;font-variant-numeric:tabular-nums}
+#ce-root .sum b{font-size:28px;font-weight:800;letter-spacing:-.02em}
+#ce-root .sum span{font-size:13px;color:var(--soft)}
+#ce-root .tablewrap{overflow-x:auto}
+#ce-root table.ce-t{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+#ce-root table.ce-t th{text-align:right;font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute);font-weight:500;padding:0 8px 8px;border-bottom:1px solid var(--line);vertical-align:bottom}
+#ce-root table.ce-t th:first-child,#ce-root table.ce-t td:first-child{text-align:left}
+#ce-root table.ce-t td{padding:9px 8px;border-bottom:1px solid var(--line);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+#ce-root table.ce-t td:first-child{color:var(--soft)}
+#ce-root table.ce-t tr.hi td{background:rgba(28,162,38,.07)}
+#ce-root table.ce-t tr.all td{color:var(--mute);border-bottom:0}
+#ce-root .bar{display:inline-block;height:8px;background:#1CA226;border-radius:2px;vertical-align:middle;margin-left:8px}
+#ce-root .two{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+#ce-root .two>div{background:var(--bg);padding:18px;display:grid;gap:10px;align-content:start}
+#ce-root .two h3{font-size:17px}
+#ce-root .two .who{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+#ce-root .two ul{margin:0;padding-left:18px;display:grid;gap:8px;font-size:14px;color:var(--soft)}
+#ce-root .two li strong{color:var(--ink);font-weight:600}
+#ce-root .two .bign{font-size:30px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+@media (max-width:820px){#ce-root .two{grid-template-columns:1fr}}
+#ce-root .both{font-size:18px;color:var(--ink);max-width:66ch}
+#ce-root .both em{color:var(--green);font-style:normal;font-weight:700}
+#ce-root .ctl{display:grid;grid-template-columns:1fr minmax(120px,240px) auto;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);padding:14px 16px}
+#ce-root .ctl label{font-size:14px;color:var(--soft)}
+#ce-root .ctl output{font-weight:700;font-variant-numeric:tabular-nums;min-width:4ch;text-align:right}
+#ce-root .ctl input{accent-color:#1CA226;width:100%}
+@media (max-width:620px){#ce-root .ctl{grid-template-columns:1fr auto}#ce-root .ctl input{grid-column:1/-1;grid-row:2}}
+#ce-root .scen{display:grid;gap:0;border-top:1px solid var(--line)}
+#ce-root .scen>div{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 72px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+#ce-root .scen .nm{font-size:14px;color:var(--ink)}
+#ce-root .scen .nm small{display:block;color:var(--mute);font-size:12px}
+#ce-root .scen .trk{position:relative;height:14px;background:#2C2E2C;border-radius:2px}
+#ce-root .scen .trk::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#9A9A9A}
+#ce-root .scen .trk span{position:absolute;top:0;bottom:0;border-radius:2px}
+#ce-root .scen .pos{background:#1CA226}
+#ce-root .scen .neg{background:#7A7D79}
+#ce-root .scen .pv{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+#ce-root .test{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--green);padding:18px;display:grid;gap:8px}
+#ce-root .test .tq{font-size:19px;font-weight:700;max-width:62ch}
+#ce-root .test p{font-size:14px;color:var(--soft);max-width:72ch}
+#ce-root footer{margin-top:40px;display:grid;gap:12px;font-size:13px;color:var(--mute)}
+#ce-root footer p{max-width:90ch}
+@media print{#ce-root details.call>*{display:block}}
+@media (prefers-reduced-motion:reduce){#ce-root .chev{transition:none}}
+</style>
+<div id="ce-root" class="ce-root">
+<div class="wrap">
+
+<header class="mast">
+  <div class="brand"><span class="mono">MoneySpider · Macro · US Earnings · Cape Fear</span><span><span class="mono" id="ce-asof">Line open · Shiller data to Oct 2026</span> <span class="stamp" id="ce-stamp" hidden>Update overdue</span></span></div>
+  <h1>Trajectory <span>Enquiries</span></h1>
+  <p class="lede">Eight questions about what US shares cost against what US companies earn: what the measure is, where it stands, how rare that is, why it might mislead, whether it has ever told us anything, what it could mean, how it squares with the economy-wide ruler, and what would change the answer. <strong style="color:#1CA226;font-weight:700">Every figure is from Robert Shiller's own monthly data, Jan 1881 to Oct 2026, unless it says otherwise.</strong></p>
+  <nav class="chain" aria-label="The eight lines">
+    <a href="#ce-ruler">The ruler</a>→<a href="#ce-now">Today</a>→<a href="#ce-when">Compared with when</a>→<a href="#ce-against">The case against</a>→<a href="#ce-predict">The evidence</a>→<a href="#ce-mean">The scenarios</a>→<a href="#ce-rulers">Two rulers</a>→<a href="#ce-test">The test</a>
+  </nav>
+  <div class="board" aria-label="The five numbers">
+    <div><span class="v g num" id="ce-b-cape">40.71</span><span class="k">Shiller CAPE: S&amp;P 500 price over ten years of real earnings</span><span class="d">Oct 2026 · provisional</span></div>
+    <div><span class="v num" id="ce-b-pct">99th</span><span class="k">Percentile of every month since 1881 (98.9th)</span><span class="d">1,750 months</span></div>
+    <div><span class="v num">44.20</span><span class="k">The record, December 1999. Higher than today in only 19 of 1,750 months</span><span class="d">18 in 1999–2000, plus Aug 2026</span></div>
+    <div><span class="v num">3.7% vs 10.8%</span><span class="k">Average real return a year over the next decade, dearest fifth of starting points against cheapest</span><span class="d">Start months 1881–2016</span></div>
+    <div><span class="v num">Gauge, not clock</span><span class="k">It has told us about the next ten years, and little about the next one or two</span><span class="d">Line 5</span></div>
+  </div>
+</header>
+
+<!-- 1 THE RULER -->
+<details class="call" id="ce-ruler" open>
+  <summary><div class="callhead"><span class="line">Line 1</span><h2>What does CAPE measure?</h2><span class="stage">The ruler</span><span class="ans"><span class="ansv">Price ÷ ten years of profits</span><span class="chev" aria-hidden="true"></span></span></div></summary>
+  <div class="reply">
+    <div class="answer">
+      <span class="say">The number you require is</span>
+      <div class="big g" style="font-size:clamp(34px,5vw,56px);line-height:1.05">Price over ten years of profits</div>
+      <p>Take the S&amp;P 500, adjusted for inflation. Divide it by the average of the last ten years of company earnings, also adjusted for inflation. The result says how many years of average profit the market is paying for. Averaging over ten years smooths out booms and recessions, so one unusually good or bad year cannot swing it.</p>
+      <p>John Campbell and Robert Shiller set it out in 1988. Shiller still publishes the series every month, back to 1881.</p>
+    </div>
+    <div class="fig">
+      <h3>The sum, October 2026</h3>
+      <div class="facts">
+        <div><span class="l">S&amp;P 500, monthly average, in October 2026 dollars</span><b class="num" id="ce-s-price">7,723</b></div>
+        <div><span class="l">Average real earnings over the last ten years</span><b class="num" id="ce-s-earn">189.70</b></div>
+        <div><span class="l">CAPE <span class="tag c">Confirmed</span></span><b class="num">40.71</b></div>
+      </div>
+      <p class="note">An ordinary price/earnings ratio divides by last year's profits alone; CAPE uses the decade. The recent months use Shiller's provisional earnings and can be revised when he updates the file.</p>
+      <p class="receipts">Receipts: Robert J. Shiller, Yale University, ie_data.xls (shillerdata.com), read 3 Nov 2026 · Campbell &amp; Shiller, Review of Financial Studies, 1988</p>
+    </div>
+  </div>
+</details>
+
+<!-- 2 TODAY -->
+<details class="call" id="ce-now">
+  <summary><div class="callhead"><span class="line">Line 2</span><h2>Where is it now?</h2><span class="stage">Today's reading</span><span class="ans"><span class="ansv">40.71, Oct 2026</span><span class="chev" aria-hidden="true"></span></span></div></summary>
+  <div class="reply one">
+    <div class="sum"><b class="num">40.71</b><span>October 2026</span><span></span></div>
+    <p class="changes">The market is priced at about 41 years of average real profit. It has been above 30 every month since November 2023, and above 35 in 20 of the 22 months since January 2025.</p>
+    <div class="fig">
+      <div class="fighead"><h3>Shiller CAPE, monthly, January 1881 to October 2026</h3><span class="tog" role="group" aria-label="Scale"><button type="button" id="ce-lin" aria-pressed="true">Linear</button><button type="button" id="ce-log" aria-pressed="false">Log</button></span></div>
+      <svg id="ce-chart" viewBox="0 0 900 340" role="img" aria-label="Shiller CAPE monthly since 1881: long-run average about 18, peaks near 33 in 1929 and 44 in 1999, 40.7 in October 2026"></svg>
+      <p class="note">Dashed line: the full-history average, 17.80. Green dot: October 2026.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 3 COMPARED WITH WHEN -->
+<details class="call" id="ce-when">
+  <summary><div class="callhead"><span class="line">Line 3</span><h2>Compared with when?</h2><span class="stage">History</span><span class="ans"><span class="ansv">Higher only in 1999–2000</span><span class="chev" aria-hidden="true"></span></span></div></summary>
+  <div class="reply">
+    <div class="answer">
+      <span class="say">The number you require is</span>
+      <div class="big g num">98.9th<small> percentile since 1881</small></div>
+      <p>Of the 1,750 months on record, 19 were higher than October 2026. Eighteen of them fall between March 1999 and late 2000. The other is August 2026, at 40.99. The record is 44.20, in December 1999.</p>
+    </div>
+    <div class="fig">
+      <h3>The yardsticks</h3>
+      <div class="facts">
+        <div><span class="l">Average, full history (Jan 1881 on)</span><b class="num">17.80</b></div>
+        <div><span class="l">Median, full history</span><b class="num">16.61</b></div>
+        <div><span class="l">Average since Jan 1990</span><b class="num">27.35</b></div>
+        <div><span class="l">Average since Jan 2009</span><b class="num">28.29</b></div>
+        <div><span class="l">Record high, Dec 1999</span><b class="num">44.20</b></div>
+        <div><span class="l">Peak before the 1929 crash, Sep 1929</span><b class="num">32.56</b></div>
+        <div><span class="l">Record low, Dec 1920</span><b class="num">4.78</b></div>
+      </div>
+      <p class="note">Which average counts as "normal" is itself an argument. Since 1990 the average has been about 27, well above the long-run 18. Line 4 takes that up.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 4 THE CASE AGAINST -->
+<details class="call" id="ce-against">
+  <summary><div class="callhead"><span class="line">Line 4</span><h2>Why might the ruler mislead?</h2><span class="stage">The case against</span><span class="ans"><span class="ansv">Partly, not wholly</span><span class="chev" aria-hidden="true"></span></span></div></summary>
+  <div class="reply one">
+    <p class="both">Serious people argue that today's CAPE <em>overstates</em> how expensive the market is. Serious people argue it <em>still</em> carries information. Both cases are stated here by the people who make them.</p>
+    <div class="two">
+      <div>
+        <span class="who">The case that the ruler reads high · critics</span>
+        <h3>The "normal" level has moved up</h3>
+        <ul>
+          <li><strong>Accounting changed.</strong> Rules adopted in the early 2000s make companies write down the value of assets they still hold, but not write it up. That pushes reported earnings down in bad years, which depresses the ten-year average and lifts CAPE (Jeremy Siegel, Financial Analysts Journal, 2016).</li>
+          <li><strong>Less is paid out.</strong> Companies now return more cash through buybacks and less through dividends. Earnings per share then grow faster, and a faster-growing stream can justify a higher multiple.</li>
+          <li><strong>The average lags.</strong> When earnings have grown fast, a ten-year average sits well below today's profits, so CAPE reads higher than a one-year ratio would.</li>
+          <li><strong>The market has changed shape.</strong> Today's index is weighted towards software and platform companies with higher profit margins than the railways and manufacturers of a century ago.</li>
+        </ul>
+      </div>
+      <div>
+        <span class="who">The case that it still carries information · defenders</span>
+        <h3>Adjust for all that, and it still reads high</h3>
+        <ul>
+          <li><strong>The adjustments narrow the gap, not close it.</strong> Clifford Asness and colleagues at AQR tested the main objections and found CAPE still high against its own history after allowing for them ("An Old Friend: The Stock Market's Shiller P/E", 2012).</li>
+          <li><strong>The low-rate excuse is weaker now.</strong> High multiples were often defended by very low bond yields. The 10-year Treasury par yield was 4.91% on 2 Nov 2026, against under 1% in 2020 (Treasury).</li>
+          <li><strong>The pattern held through the changes.</strong> Line 5 shows the step-down in later returns across more than a century that included several changes in accounting and payout habits.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="changes"><strong>Where they meet.</strong> Both sides accept that the level which counts as "normal" may have risen. They differ on how far. On the critics' adjustments, today's reading is high; on the defenders', it is very high.</p>
+  </div>
+</details>
+
+<!-- 5 THE EVIDENCE -->
+<details class="call" id="ce-predict">
+  <summary><div class="callhead"><span class="line">Line 5</span><h2>Does it predict anything?</h2><span class="stage">The evidence</span><span class="ans"><span class="ansv">A gauge, not a clock</span><span class="chev" aria-hidden="true"></span></span></div></summary>
+  <div class="reply one">
+    <p class="both">Over ten years, CAPE has said something: the dearer the start, the lower the return that followed. Over one or two years, it has said very little. <em>A gauge, not a clock.</em></p>
+    <div class="fig">
+      <h3>What followed each starting point, by starting CAPE</h3>
+      <div class="tablewrap">
+      <table class="ce-t">
+        <thead><tr><th>CAPE at the start</th><th>Avg real return a year, next 10 years</th><th>Worst</th><th>Best</th><th>Decades with a loss</th><th>A 20%+ fall within 3 yrs</th><th>within 10 yrs</th></tr></thead>
+        <tbody id="ce-tbody"></tbody>
+      </table>
+      </div>
+      <p class="note">Each row is one fifth of the 1,630 start months from Jan 1881 to Oct 2016 (the last with ten years of results). Returns are real total returns: dividends reinvested, after inflation. A fall means real total return dropping 20% or more from a previous high. Starting CAPE and the next ten years' return have a correlation of −0.48.</p>
+    </div>
+    <div class="two">
+      <div>
+        <span class="who">The two episodes that started above 30</span>
+        <h3>September 1929 · CAPE 32.56</h3>
+        <span class="bign">−1.4% a year</span>
+        <p class="note">Real total return over the next ten years. The fall from peak reached 77%, at June 1932. Over twenty years: +0.4% a year.</p>
+      </div>
+      <div>
+        <span class="who">&nbsp;</span>
+        <h3>December 1999 · CAPE 44.20</h3>
+        <span class="bign">−3.2% a year</span>
+        <p class="note">Real total return over the next ten years. The fall from peak reached 52%, at March 2009. Over twenty years: +3.8% a year.</p>
+      </div>
+    </div>
+    <p class="changes"><strong>Read with care.</strong> The 1,630 starting months overlap, so there are only about 13 or 14 separate decades in the record. Only 57 months started with CAPE at 30 or more, and they come from just these two episodes. Every month since November 2016 is still waiting for its ten-year result. This is evidence about tendencies, not a forecast. Campbell and Shiller (1988, 2001) and Asness (AQR, 2012) report the same pattern.</p>
+  </div>
+</details>
+
+<!-- 6 THE SCENARIOS -->
+<details class="call" id="ce-mean">
+  <summary><div class="callhead"><span class="line">Line 6</span><h2>What could that mean?</h2><span class="stage">The scenarios</span><span class="ans"><span class="ansv" id="ce-a6">+21.9% to −46.7%</span><span class="chev" aria-hidden="true"></span></span></div></summary>
+  <div class="reply one">
+    <p class="changes"><strong>A calculator, not a forecast.</strong> Grow today's ten-year earnings average at the rate you choose for ten years, then apply one of four multiples. The result is where the index would be in 2036, in today's dollars. Only two things are assumptions: the growth rate and the multiple.</p>
+    <div class="ctl"><label for="ce-g">Real earnings growth, a year, for ten years</label><input type="range" id="ce-g" min="0" max="4" step="0.1" value="2.0"><output id="ce-gout" for="ce-g">2.0%</output></div>
+    <div class="fig">
+      <h3>Real change in the S&amp;P 500 price to 2036, before dividends</h3>
+      <div class="scen" id="ce-scen"></div>
+      <p class="note">Dividends would add roughly 1.1% a year at today's yield (June 2026, Shiller), about 12 points over ten years, to every row. Earnings base in 2036 at this growth rate: <b id="ce-e36">231.24</b> (today 189.70).</p>
+    </div>
+  </div>
+</details>
+
+<!-- 7 TWO RULERS -->
+<details class="call" id="ce-rulers">
+  <summary><div class="callhead"><span class="line">Line 7</span><h2>Do the two rulers agree?</h2><span class="stage">Earnings and the economy</span><span class="ans"><span class="ansv">Same direction, different degree</span><span class="chev" aria-hidden="true"></span></span></div></summary>
+  <div class="reply one">
+    <p class="both">Trajectory Enquiries: US Markets measures the market against the size of the economy. This page measures it against company profits. Both say <em>expensive</em>. They differ on <em>how unusual</em>.</p>
+    <div class="two">
+      <div>
+        <span class="who">Against the economy · Buffett Indicator</span>
+        <span class="bign">255% · a record</span>
+        <p class="note">US company shares at market value over GDP, Q2 2026 (Fed Z.1 ÷ BEA). Above every quarter since 1952, including 2000.</p>
+      </div>
+      <div>
+        <span class="who">Against profits · Shiller CAPE</span>
+        <span class="bign">40.71 · below 1999</span>
+        <p class="note">October 2026. The 98.9th percentile, but still under December 1999's 44.20.</p>
+      </div>
+    </div>
+    <p class="changes"><strong>Why they can differ.</strong> If company profits have grown faster than the economy, the market can rise further against GDP than against profits. Two likely reasons: profit margins have been unusually high, and US companies earn a large share abroad, which counts in their market value but not in US GDP. The two also cover different companies: the Fed counts all US nonfinancial companies, CAPE the S&amp;P 500. <span class="tag i">Inferred</span> On either ruler, the reading is high.</p>
+  </div>
+</details>
+
+<!-- 8 THE TEST -->
+<details class="call" id="ce-test">
+  <summary><div class="callhead"><span class="line">Line 8</span><h2>What would change this answer?</h2><span class="stage">The test</span><span class="ans"><span class="ansv">A recession above 36</span><span class="chev" aria-hidden="true"></span></span></div></summary>
+  <div class="reply one">
+    <div class="test">
+      <span class="say">Our falsification test</span>
+      <p class="tq">The ruler has shifted if CAPE <span style="color:var(--green)">holds above about 36 through a US recession</span>. It is reverting if it falls <span style="color:var(--green)">below its post-1990 average, 27.35, for two quarters</span>.</p>
+      <p>The first would mean that even a downturn no longer brings the multiple back towards its old range, which is what the critics in Line 4 would expect. The second would mean the old range still pulls, which is what the defenders would expect. Neither has happened yet. The last time CAPE was below 30 was October 2023.</p>
+    </div>
+    <div class="two">
+      <div>
+        <span class="who">The strongest case against the high reading</span>
+        <h3>The ruler measures a different market</h3>
+        <ul>
+          <li><strong>The averages are from another economy.</strong> Most of the 1,750 months come from an index of railways, steel and utilities, with different margins and payout habits.</li>
+          <li><strong>High has lasted a long time.</strong> CAPE has been above its long-run average almost continuously since the early 1990s, and returns over much of that time were good.</li>
+        </ul>
+      </div>
+      <div>
+        <span class="who">The case for it</span>
+        <h3>Adjusted or not, it is near the top</h3>
+        <ul>
+          <li><strong>Even the modern yardstick says high.</strong> Today is about half as high again as the post-1990 average.</li>
+          <li><strong>The second ruler agrees.</strong> The Buffett Indicator (Line 7) is at a record on a measure that does not use earnings at all.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</details>
+
+<footer>
+  <p class="receipts">Source: Robert J. Shiller, Yale University, ie_data.xls (shillerdata.com), monthly Jan 1881 to Oct 2026, read 3 Nov 2026; "Shiller PE" and "CAPE" used generically, not the Shiller Barclays CAPE® Index Family. Returns: Shiller's real total return series. Studies: Campbell &amp; Shiller (1988, 2001); Siegel, Financial Analysts Journal (2016); Asness et al., AQR (2012). Buffett Indicator: Trajectory Enquiries: US Markets (Fed Z.1, BEA, Q2 2026). 10-year yield: US Treasury daily par yield curve, 2 Nov 2026.</p>
+  <p>This page measures how the price of US shares compares with what US companies have earned, and what has followed similar readings in the past. It is not a view on what any market will do, and not advice. "Cape Fear" is a house nickname for this gauge.</p>
+</footer>
+
+</div>
+</div>
+<script>
+(function(){
+  var root=document.getElementById('ce-root');if(!root)return;
+  var NS='http://www.w3.org/2000/svg';
+  function el(t,a,txt){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e;}
+  function $(id){return document.getElementById(id);}
+
+  // DATA (Shiller ie_data.xls, read 3 Nov 2026) — refresh monthly
+  var AS_OF='Oct 2026', FILE_READ='2026-11-03';
+  var CAPE_NOW=40.71, REAL_PRICE_NOW=7722.72, DIV_YIELD=0.011;
+  var MEANS=[['Stays at today’s CAPE','40.71',40.71],['Back to the post-2009 average','28.29, since Jan 2009',28.29],['Back to the post-1990 average','27.35, since Jan 1990',27.35],['Back to the full-history average','17.80, since Jan 1881',17.80]];
+  var CE_ENC='1847,1815,1827,1795,1887,1903,1812,1729,1672,1626,1648,1596,1568,1515,1509,1492,1457,1433,1524,1553,1608,1576,1519,1538,1527,1476,1505,1548,1534,1590,1595,1520,1549,1505,1541,1490,1443,1481,1474,1435,1347,1291,1304,1386,1357,1327,1330,1343,1313,1338,1373,1355,1371,1398,1433,1513,1512,1599,1682,1630,1669,1701,1684,1680,1686,1783,1785,1772,1815,1856,1897,1819,1751,1713,1747,1782,1808,1771,1743,1674,1668,1588,1595,1546,1536,1542,1481,1502,1539,1508,1528,1560,1599,1572,1522,1495,1580,1619,1607,1605,1692,1722,1689,1713,1735,1705,1691,1661,1722,1703,1690,1726,1779,1768,1759,1660,1617,1548,1475,1444,1543,1548,1505,1541,1557,1566,1562,1616,1771,1772,1767,1821,1902,1904,1974,1994,1991,1977,1921,1920,1869,1904,1846,1801,1766,1713,1690,1710,1578,1542,1435,1459,1501,1527,1594,1561,1574,1620,1719,1743,1681,1661,1629,1646,1652,1650,1654,1667,1652,1633,1636,1639,1708,1721,1755,1807,1820,1794,1734,1655,1658,1752,1723,1764,1783,1778,1664,1570,1654,1644,1709,1650,1703,1689,1696,1670,1705,1785,1865,1901,1937,1903,1836,1875,1925,1892,1804,1771,1760,1954,1986,2054,2044,1995,2053,2140,2293,2305,2328,2315,2209,2121,2156,2173,2059,2015,2020,1851,1867,1870,1878,1894,1840,1799,1769,1807,1734,1810,1942,2074,2098,2168,2235,2441,2306,2524,2314,2308,2259,2225,2238,2168,2234,2246,2241,2282,2243,2196,2239,2317,2286,2060,2041,1963,2032,2011,1988,1898,1895,1782,1692,1630,1565,1525,1541,1604,1586,1502,1508,1557,1553,1547,1604,1630,1674,1763,1808,1816,1846,1917,1983,1948,1863,1874,1921,1957,1974,1990,1944,1958,2013,1987,1926,1888,1805,1817,1820,1897,1920,1810,1814,1766,1722,1622,1469,1467,1379,1314,1359,1251,1233,1083,1059,1133,1190,1155,1198,1245,1308,1305,1335,1388,1370,1369,1444,1458,1476,1417,1434,1465,1495,1504,1523,1542,1525,1499,1475,1475,1455,1400,1405,1356,1357,1302,1234,1275,1294,1392,1416,1374,1405,1472,1437,1475,1505,1533,1508,1390,1300,1307,1373,1393,1379,1353,1364,1365,1365,1379,1380,1398,1393,1391,1375,1339,1315,1268,1244,1243,1222,1149,1153,1185,1184,1147,1107,1117,1164,1191,1169,1152,1148,1143,1069,1049,1050,1061,1052,1017,1036,1033,1071,1140,1103,1115,1111,1158,1201,1255,1286,1288,1254,1235,1218,1191,1203,1200,1179,1173,1194,1205,1205,1141,1099,1006,1033,964,914,915,900,857,795,739,675,641,664,678,669,652,658,650,637,630,615,629,633,613,610,624,636,646,683,702,705,648,656,679,647,616,599,546,580,560,519,504,508,502,530,535,513,478,512,527,519,530,561,522,520,516,538,548,584,611,629,646,682,727,759,756,760,802,827,843,800,796,815,853,870,837,800,767,735,744,746,732,755,781,807,816,806,792,790,805,838,872,858,842,889,931,969,983,952,948,973,980,996,1011,1036,1072,1089,1115,1134,1139,1071,1040,1058,1120,1187,1249,1269,1243,1262,1301,1319,1363,1403,1449,1500,1512,1582,1686,1782,1754,1813,1865,1881,1887,1994,2126,2183,2091,2108,2176,2300,2358,2512,2530,2708,2713,2768,2757,2770,2794,2993,3148,3256,2896,2117,2201,2231,2370,2459,2584,2431,2187,2155,2130,2107,1821,1694,1606,1671,1816,1858,1687,1540,1506,1552,1501,1282,1115,1142,931,931,934,941,719,639,557,584,883,976,848,846,826,873,783,787,872,1125,1310,1375,1300,1292,1170,1201,1228,1303,1393,1325,1352,1218,1229,1174,1132,1091,1111,1145,1164,1150,1109,1040,1110,1199,1254,1320,1411,1442,1483,1613,1616,1709,1810,1866,1872,1775,1839,1936,1962,1986,2091,2150,2113,2162,2224,2204,2056,1947,1871,1965,1981,1685,1436,1316,1301,1351,1326,1238,1179,1199,1229,1477,1490,1428,1606,1615,1576,1560,1566,1573,1392,1450,1483,1527,1512,1645,1682,1660,1628,1638,1622,1617,1637,1414,1284,1337,1365,1421,1433,1464,1391,1390,1300,1296,1243,1204,1216,1274,1246,1228,1158,1091,1009,1010,968,900,854,851,891,915,901,908,960,966,962,1015,1071,1085,1104,1136,1152,1177,1121,1134,1119,1063,1074,1105,1095,1122,1094,1110,1153,1174,1154,1133,1158,1148,1164,1196,1234,1232,1263,1304,1313,1287,1292,1380,1437,1485,1502,1562,1576,1513,1604,1601,1577,1451,1398,1184,1139,1111,1137,1147,1195,1129,1090,1073,1108,1170,1134,1083,1113,1098,1068,1042,1000,1019,1078,1124,1158,1113,1072,1055,1083,1025,1016,1025,987,990,978,969,907,961,985,988,1017,1022,1053,1075,1091,1091,1118,1146,1155,1054,1104,1134,1166,1154,1131,1190,1214,1184,1195,1186,1162,1178,1226,1244,1231,1185,1215,1253,1236,1236,1224,1220,1245,1267,1268,1243,1213,1247,1293,1301,1286,1283,1216,1214,1162,1175,1172,1114,1139,1164,1175,1200,1222,1242,1291,1331,1336,1383,1404,1436,1462,1512,1579,1599,1644,1622,1669,1652,1737,1845,1822,1884,1777,1884,1894,1829,1827,1937,1937,1854,1816,1886,1867,1784,1742,1712,1720,1672,1584,1590,1612,1660,1673,1687,1587,1516,1415,1374,1367,1379,1378,1393,1391,1432,1464,1496,1554,1593,1656,1699,1736,1798,1776,1820,1843,1869,1845,1909,1896,1812,1802,1807,1862,1834,1755,1729,1743,1726,1782,1738,1758,1705,1661,1715,1756,1847,1923,1984,2038,2060,2033,2015,2094,2071,2092,2186,2204,2120,2145,2144,2066,1909,1683,1714,1757,1732,1674,1785,1859,1926,1947,1929,2015,2051,2038,1997,2047,2096,2089,2072,2104,2163,2183,2217,2242,2257,2230,2298,2265,2289,2321,2323,2275,2327,2337,2325,2342,2371,2239,2230,2267,2337,2378,2393,2369,2406,2370,2261,2311,2185,2156,2138,1991,1916,1883,1971,1974,2043,2107,2144,2169,2195,2155,2180,2203,2222,2207,2126,2175,2151,2042,1993,2128,2163,2200,2175,2114,2168,2200,2220,2228,2119,2090,2020,2043,2097,1971,1868,1843,1840,1845,1844,1733,1709,1637,1653,1587,1398,1380,1373,1410,1484,1506,1495,1587,1646,1703,1740,1792,1756,1708,1689,1652,1686,1643,1564,1660,1726,1746,1781,1792,1766,1764,1740,1794,1761,1753,1834,1865,1871,1789,1741,1694,1631,1581,1589,1528,1548,1591,1465,1349,1353,1296,1331,1255,1200,1189,1039,982,868,874,895,829,892,976,1016,1023,1082,1101,1090,1009,992,1033,1044,1025,1119,1159,1163,1169,1153,1154,1176,1160,1181,1135,1125,1160,1144,1101,1090,1064,1055,1053,1057,1027,1007,977,977,968,924,905,895,926,963,955,943,1002,994,953,893,901,926,900,907,913,879,885,883,913,911,868,852,875,885,905,808,784,810,851,888,907,920,936,965,939,926,883,908,909,882,877,845,840,758,765,781,783,739,718,695,726,719,669,664,664,740,800,835,847,876,891,923,953,987,1000,1001,973,998,1000,985,982,989,932,933,931,923,901,887,962,969,960,969,960,1000,1049,1037,1040,1061,1081,1100,1074,1047,1055,1116,1169,1172,1239,1319,1355,1356,1389,1362,1389,1347,1343,1387,1409,1492,1582,1643,1620,1616,1683,1731,1833,1768,1553,1359,1339,1390,1430,1467,1443,1403,1477,1461,1424,1437,1481,1445,1470,1509,1547,1530,1569,1619,1664,1701,1773,1771,1764,1724,1765,1705,1651,1683,1681,1739,1782,1775,1617,1530,1482,1519,1585,1561,1735,1782,1816,1804,1802,1810,1851,1836,1835,1829,1844,1977,1958,1928,1930,1966,1932,1962,1972,1971,1937,1983,2045,2032,2055,2086,2046,2052,2061,2056,2081,2099,2111,2104,2116,2141,2126,2083,2006,2020,2029,2007,2054,2058,2040,2021,1991,2022,2080,2115,2164,2220,2272,2338,2328,2395,2393,2435,2503,2476,2598,2563,2542,2581,2597,2486,2541,2568,2648,2759,2772,2833,2927,2880,2759,2993,3126,3277,3259,3267,3290,3234,3303,3286,3471,3630,3728,3696,3680,3826,3542,3353,3377,3737,3882,4058,4040,4136,4270,4256,4218,4383,4193,4132,4055,4321,4420,4377,4219,4322,4353,4197,4278,4276,4287,4190,3937,3878,3727,3698,3583,3233,3217,3407,3307,3216,3140,2767,2858,3001,3050,3028,2909,3029,2901,2813,2639,2346,2359,2237,2196,2335,2310,2290,2121,2131,2243,2359,2483,2487,2464,2524,2568,2595,2664,2766,2765,2689,2690,2590,2640,2570,2517,2567,2541,2647,2714,2659,2674,2634,2541,2565,2607,2629,2610,2573,2488,2593,2644,2647,2625,2633,2615,2565,2475,2470,2505,2564,2654,2693,2728,2721,2732,2623,2698,2755,2742,2741,2615,2673,2732,2573,2596,2402,2350,2261,2336,2370,2242,2091,2140,2036,1639,1526,1538,1517,1412,1332,1498,1600,1638,1669,1809,1883,1936,1981,2032,2053,1992,2100,2180,2048,1974,1967,1977,2038,2124,2170,2240,2298,2349,2290,2314,2306,2210,2261,2005,1970,2016,2035,2052,2121,2180,2205,2178,2094,2055,2100,2141,2178,2158,2090,2124,2190,2205,2242,2260,2341,2293,2349,2336,2344,2383,2464,2486,2486,2459,2496,2479,2494,2556,2582,2562,2592,2516,2661,2679,2649,2700,2673,2679,2681,2650,2638,2569,2450,2549,2623,2597,2421,2400,2537,2592,2569,2584,2669,2695,2673,2653,2685,2787,2806,2866,2909,2890,2931,2975,3000,2991,3017,3092,3130,3209,3331,3204,3181,3097,3124,3163,3189,3239,3262,3104,3020,2829,2838,2954,2958,3013,2924,2928,2999,2871,2923,2884,2984,3033,3099,3073,2482,2593,2733,2884,2960,3116,3084,3128,3247,3377,3451,3510,3504,3672,3655,3670,3744,3797,3762,3725,3858,3830,3694,3529,3427,3389,3067,2905,2900,3070,2823,2708,2838,2832,2833,2892,2794,2876,2876,2994,3089,3030,2980,2877,3001,3145,3205,3304,3375,3314,3377,3481,3544,3492,3566,3659,3735,3771,3713,3719,3478,3262,3508,3611,3747,3785,3858,3921,3915,3958,3964,3901,3703,3814,4010,4015,4001,4099,4058,4071';
+  var BANDS=[['Cheapest fifth (4.8–11.1)',10.8,1.2,20.0,0,34,90],['Second (11.1–14.6)',7.1,-4.2,15.4,11,37,85],['Third (14.6–17.6)',6.4,-4.6,16.1,11,33,82],['Fourth (17.6–21.4)',5.5,-4.0,14.6,10,41,89],['Dearest fifth (21.4–44.2)',3.7,-5.9,12.8,27,48,96]];
+
+  // overdue stamp
+  try{var days=(Date.now()-new Date(FILE_READ+'T00:00:00Z').getTime())/864e5;if(days>45){var s=$('ce-stamp');s.hidden=false;s.textContent='Update overdue · data to '+AS_OF;}}catch(e){}
+
+  // Line 2 chart
+  var V=CE_ENC.split(',').map(function(x){return +x/100;});
+  var logScale=false;
+  function draw(){var c=$('ce-chart');if(!c)return;while(c.firstChild)c.removeChild(c.firstChild);
+    var W=900,H=340,L=40,R=16,T=14,B=30,n=V.length;
+    var lo=logScale?Math.log(4):0, hi=logScale?Math.log(50):48;
+    function X(i){return L+(W-L-R)*i/(n-1);}function Y(v){var t=logScale?Math.log(v):v;return T+(H-T-B)*(1-(t-lo)/(hi-lo));}
+    (logScale?[5,10,20,40]:[0,10,20,30,40]).forEach(function(g){c.appendChild(el('line',{x1:L,x2:W-R,y1:Y(Math.max(g,4.01)),y2:Y(Math.max(g,4.01)),stroke:'#343634','stroke-width':1}));c.appendChild(el('text',{x:L-8,y:Y(Math.max(g,4.01))+4,'text-anchor':'end','font-size':11,fill:'#9A9A9A'},g));});
+    for(var y=1890;y<=2020;y+=10){var i=(y-1881)*12;c.appendChild(el('text',{x:X(i),y:H-8,'text-anchor':'middle','font-size':11,fill:'#9A9A9A'},y));}
+    c.appendChild(el('line',{x1:L,x2:W-R,y1:Y(17.80),y2:Y(17.80),stroke:'#9A9A9A','stroke-width':1,'stroke-dasharray':'4 4'}));
+    var d='';for(var k=0;k<n;k++){d+=(k?'L':'M')+X(k).toFixed(1)+' '+Y(V[k]).toFixed(1);}
+    c.appendChild(el('path',{d:d,fill:'none',stroke:'#1CA226','stroke-width':1.4,'stroke-linejoin':'round'}));
+    var iMax=V.indexOf(Math.max.apply(null,V));
+    c.appendChild(el('text',{x:X(iMax)-8,y:Y(V[iMax])+4,'text-anchor':'end','font-size':11,'font-weight':700,fill:'#EDEEEC'},'44.20 · Dec 1999'));
+    var i29=(1929-1881)*12+8;c.appendChild(el('text',{x:X(i29)+8,y:Y(V[i29])+4,'font-size':11,fill:'#B9BCB8'},'32.56 · Sep 1929'));
+    c.appendChild(el('circle',{cx:X(n-1),cy:Y(V[n-1]),r:4.5,fill:'#1CA226',stroke:'#1A1A1A','stroke-width':2}));
+    c.appendChild(el('text',{x:X(n-1)-8,y:Y(V[n-1])-10,'text-anchor':'end','font-size':12,'font-weight':700,fill:'#1CA226'},V[n-1].toFixed(2)+' · '+AS_OF));
+  }
+  draw();
+  function setScale(lg){logScale=lg;$('ce-lin').setAttribute('aria-pressed',String(!lg));$('ce-log').setAttribute('aria-pressed',String(lg));draw();}
+  $('ce-lin').addEventListener('click',function(){setScale(false);});$('ce-log').addEventListener('click',function(){setScale(true);});
+
+  // Line 5 table
+  (function(){var b=$('ce-tbody');if(!b)return;var h='';
+    BANDS.forEach(function(r,i){h+='<tr'+(i===4?' class="hi"':'')+'><td>'+r[0]+'</td><td><b>'+r[1].toFixed(1)+'%</b><span class="bar" style="width:'+(r[1]*5)+'px"></span></td><td>'+(r[2]>0?'+':'')+r[2].toFixed(1)+'%</td><td>+'+r[3].toFixed(1)+'%</td><td>'+r[4]+'%</td><td>'+r[5]+'%</td><td>'+r[6]+'%</td></tr>';});
+    h+='<tr class="all"><td>All start months</td><td>6.7%</td><td></td><td></td><td></td><td>39%</td><td>88%</td></tr>';
+    b.innerHTML=h;})();
+
+  // Line 6 calculator
+  var BASE=REAL_PRICE_NOW/CAPE_NOW;
+  function fmt(p){return (p>=0?'+':'−')+Math.abs(p).toFixed(1)+'%';}
+  function calc(){var g=parseFloat($('ce-g').value)/100;$('ce-gout').textContent=(g*100).toFixed(1)+'%';
+    var e36=BASE*Math.pow(1+g,10);$('ce-e36').textContent=e36.toFixed(2);
+    var html='',out=[];
+    MEANS.forEach(function(m){var p=(e36*m[2]/REAL_PRICE_NOW-1)*100;out.push(p);var w=Math.min(Math.abs(p),60)/60*50;
+      html+='<div><span class="nm">'+m[0]+'<small>CAPE '+m[1]+'</small></span><span class="trk"><span class="'+(p>=0?'pos':'neg')+'" style="'+(p>=0?'left:50%':'right:50%')+';width:'+w+'%"></span></span><span class="pv">'+fmt(p)+'</span></div>';});
+    $('ce-scen').innerHTML=html;$('ce-a6').textContent=fmt(Math.max.apply(null,out))+' to '+fmt(Math.min.apply(null,out));}
+  $('ce-g').addEventListener('input',calc);calc();
+  $('ce-s-earn').textContent=BASE.toFixed(2);
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('ce-root');if(!root)return;
+  var calls=root.querySelectorAll('details.call');
+  function openFor(h){if(!h)return;if(h==='#ce-all'){calls.forEach(function(d){d.open=true;});return;}var d=root.querySelector('details.call'+h);if(d){d.open=true;setTimeout(function(){d.scrollIntoView({block:'start'});},30);}}
+  root.querySelectorAll('.chain a').forEach(function(a){a.addEventListener('click',function(){openFor(a.getAttribute('href'));});});
+  try{openFor(location.hash);}catch(e){}
+  window.addEventListener('hashchange',function(){openFor(location.hash);});
+})();
+</script>
+<script>
+(function(){
+  function c(){var r=document.getElementById('ce-root');if(!r)return;var fe=r.closest('.fluid-engine'),bl=r.closest('.fe-block');if(fe&&bl&&fe.querySelectorAll('.fe-block').length===1){fe.style.gridTemplateRows='auto';bl.style.gridRow='1 / 2';}r.style.width='min(1100px, 92vw)';r.style.marginLeft='0px';var b=r.getBoundingClientRect();r.style.marginLeft=((document.documentElement.clientWidth-b.width)/2-b.left)+'px';}
+  if(document.readyState==='complete')c();else window.addEventListener('load',c);
+  window.addEventListener('resize',c);setTimeout(c,400);setTimeout(c,1200);setTimeout(c,2500);
+})();
+</script>
